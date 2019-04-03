@@ -1,0 +1,19 @@
+{
+  "name": "final_project_template",
+  "private": true,
+  "dependencies": {
+    "@babel/polyfill": "^7.4.0",
+    "@rails/webpacker": "3.5",
+    "animate.css": "^3.7.0",
+    "axios": "^0.18.0",
+    "babel-preset-react": "^6.24.1",
+    "nuka-carousel": "^4.5.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-on-rails": "11.2.2"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "2.11.2"
+  }
+}

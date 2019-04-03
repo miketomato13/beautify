@@ -1,0 +1,11 @@
+<h1>All Listings</h1>
+
+<div>
+  <% Listing.all.each do |l| %>
+  <%= link_to l.title,l %> <br />
+  <% end %>
+</div>
+
+<br/>
+
+<%= link_to 'Create a Listing!', new_listing_path %>

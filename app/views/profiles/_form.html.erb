@@ -1,0 +1,48 @@
+<%= form_for(@profile) do |form|%>
+<div id="test2">
+  <div id="beautify">
+    <% if current_user.profile %>
+      <h1>Edit Profile</h1>
+    <% else %>
+      <h1>Create Profile</h1>
+    <% end %>
+    <br><br>
+    <div class="form-group row">
+      <%=form.label :name, class: "col-sm-4 col-form-label" %>
+      <%=form.text_field :name, class: "col-sm-6" %>
+    </div><br>
+    <div class="form-group row">
+      <%=form.label :nickname, class: "col-sm-4 col-form-label" %>
+      <%=form.text_field :nickname, class: "col-sm-6" %>
+    </div><br>
+    <div class="form-group row">
+      <%=form.label :bio, class: "col-sm-4 col-form-label" %>
+      <%=form.text_area :bio, class: "col-sm-8" %>
+    </div><br>
+    <div class="form-group row">
+      <%=form.label :location, class: "col-sm-4 col-form-label" %>
+      <%=form.text_field :location, class: "col-sm-6" %>
+    </div><br>
+    <div class="form-group row">
+      <%= form.label :avatar, class: "col-sm-4 col-form-label" %>
+      <%= form.file_field :avatar, class: "col-sm-8" %>
+    </div><br>
+    <div class="form-group row">
+    <div class="form-check">
+    Are you an artist?
+      <%= form.label 'Yes', class: "custom-control custom-radio custom-control-inline"%>
+      <%= form.radio_button :is_artist, true, class: "radio" %>
+      <%= form.label 'No', class: "custom-control custom-radio custom-control-inline" %>
+      <%= form.radio_button :is_artist, false, class: "radio" %>
+  </div>
+</div>
+<br>
+<br>
+<div class="form-group row">
+  <div class="col-sm-10">
+      <%= form.submit %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

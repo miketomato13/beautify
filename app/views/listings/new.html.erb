@@ -1,0 +1,66 @@
+<div id="test">
+<%= form_with(model: @listing, local: true) do |form| %>
+<div id="beautify">
+  <h3>Beautify My Location</h3>
+</div>
+  <div class="form control">
+    <div class="form-group">
+      <%= form.label "Listing Title"%>
+      <%= form.text_field :title,
+            class: "form-control col-lg-10" %>
+    </div>
+    <div class="form-group">
+      <%= form.label "Description of project"%>
+      <%= form.text_field :description,
+            class: "form-control col-lg-10" %>
+    </div>
+    <div class="form-group">
+      <%= form.label :address %>
+      <%= form.text_field :address, placeholder: "123 Main Street",
+            class: "form-control col-lg-10" %>
+    </div>
+    <div class="form-group">
+      <%= form.label :city%>
+      <%= form.text_field :city,
+            class: "form-control col-lg-10"%>
+    </div>
+    <div class="form-group">
+      <%= form.label "State"%>
+      <%= form.text_field :state, placeholder: "(Ex: FL, or Florida)",
+            class: "form-control col-lg-10"%>
+    </div>
+    <div class="form-group">
+      <%= form.label "Tags" %>
+      <%= form.text_field :tags, placeholder: "(Ex: warehouse, wall, mural, etc)",
+            class: "form-control col-lg-10"%>
+    </div>
+    <div class="form-group">
+      <%= form.label "Height (in feet)" %>
+      <%= form.text_field :height,
+            class: "form-control col-lg-10"%>
+    </div>
+    <div class="form-group">
+      <%= form.label "Length (in feet)"%>
+      <%= form.text_field :length,
+            class: "form-control col-lg-10"%>
+    </div>
+    <div class="form-group">
+          <%= form.label "Preferred Start Date" %>
+          <%= form.date_field :due_date,
+                class: "form-control col-lg-10" %>
+    </div>
+    <div class="form-group">
+      <%= form.label "Allocated Budget" %>
+      <%= form.text_field :budget, placeholder: "$",
+              class: "form-control col-lg-10"%>
+    </div>
+    <div class="form-group">
+      <%= form.label :images %>
+      <%= form.file_field :images, multiple: true%>
+    </div>
+    <div class="actions">
+      <%= form.submit :class => 'submit' %>
+    </div>
+    </div>
+</div>
+<% end %>

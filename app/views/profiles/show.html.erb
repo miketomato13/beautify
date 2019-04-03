@@ -1,0 +1,55 @@
+<div class="rocio">
+<h1 id="profileNickname"><%= @profile.nickname + "\'s profile"%></h1><br/><br/>
+  <img id="imageAva"  <%= image_tag (@profile.avatar.attached?) ? @profile.avatar : "https://randomuser.me/api/portraits/med/lego/1.jpg"  %><br/><br/><br/><br/>
+  <div class="tableProfile">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><h5>Artist</h5></th>
+        <th><h5>Location</h5></th>
+      </tr>
+      <tbody>
+        <tr>
+          <td><%= @profile.nickname %></td>
+          <td><%= @profile.location %></td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <thead>
+        <tr>
+          <th><h5>Bio</h5></th>
+        </tr>
+        <tbody>
+          <tr>
+            <td><%= @profile.bio %></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table">
+        <thead>
+          <tr>
+            <th><h5>Profile Type</h5></th>
+            <th><h5>Contact</h5>
+          </tr>
+          <tbody>
+            <tr>
+              <td><% if @profile.is_artist == true %>
+                     <%= "Artist" %>
+                  <% else %>
+                     <%= "User" %>
+                  <% end %>
+              </td>
+              <td><%= @profile.email %></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+  <% if @profile == current_user.profile %>
+    <%= button_to "Edit Profile", edit_profile_path(current_user.profile), method: :get %>
+  <% elsif @profile.is_artist? %>
+    <%= button_to 'Back to Artists', artists_path, method: :get %>
+  <% else %>
+    <%= button_to 'Back to Users', users_path, method: :get %>
+  <% end %>
+</div>

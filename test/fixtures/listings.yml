@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyString
+  address: MyString
+  length: 1
+  height: 1
+  due_date: 2019-03-13
+  budget: MyString
+
+two:
+  title: MyString
+  description: MyString
+  address: MyString
+  length: 1
+  height: 1
+  due_date: 2019-03-13
+  budget: MyString

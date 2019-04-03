@@ -1,0 +1,21 @@
+<h1>nerds</h1>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>User Name</th>
+        <th>Email</th>
+        <th>avatar</th>
+        <th>Artist?</th>
+      </tr>
+      </thead>
+      <tbody>
+  <% @users.each do |user| %>
+      <tr>
+        <td> <%= link_to user.profile.name, user.profile %> </td>
+
+      </tr>
+  <% end %>
+      </tbody>
+  </table>
+</div>

@@ -1,0 +1,15 @@
+<%= form_tag charges_path do %>
+  <% end %>
+  <article>
+    <%= hidden_field_tag 'amount', @listing.budget %>
+  </article>
+    <script
+      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-zip-code="true"
+      data-key="pk_test_iMWzgJ8asjYKU7Jgjs6d1op2"
+      data-amount= "<%= @listing.budget %>"
+      data-name="Beautify"
+      data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+      data-locale="auto">
+    </script>
+  <% end %>

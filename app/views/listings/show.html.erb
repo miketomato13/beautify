@@ -1,0 +1,177 @@
+<div class= "listingpage">
+  <p class="notice"><%= notice %></p>
+  <div class="listingtitle">
+  <h1><%= @listing.title %></h1>
+  </div>
+  <br>
+  <div class="listingpagemain">
+    <div class="carousel">
+      <%= react_component 'ListingCarousel', props: { listing_images: @listing.images.map{ |image| url_for(image) } } %>
+      <h5>Dimensions:</h5>
+      <table class="table">
+      <thead>
+        <tr>
+          <th><h5>Length</h5></th>
+          <th><h5>Height</h5></th>
+        </tr>
+        <tbody>
+          <tr>
+            <td> <%= @listing.length %>ft</td>
+            <td> <%= @listing.height %>ft</td>
+          </tr>
+        </tbody>
+        </table>
+    </div>
+    <div class="listinginfo">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><h5>Owner</h5></th>
+            <th><h5>Description</h5></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><h5><%= button_to @listing.profile.nickname, profile_path(@listing.user_id), method: :get%></h5></td>
+            <td><h6><%= @listing.description %></h6></td>
+          </tr>
+        </tbody>
+      </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th><h5>Address</h5></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="addressRow"><%= @listing.address %></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th><h5>City</h5></th>
+              <th><h5>State</h5></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= @listing.city %></td>
+              <td><%= @listing.state %></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th><h5>Due Date</h5></th>
+              <th><h5>Budget</h5></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= @listing.due_date %></td>
+              <td>$<%= @listing.budget %>.00</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+  <br>
+  <div class= "offertable">
+   <h4>Beautification Offers</h4>
+   <% if current_user!= @listing.user && !current_user.has_made_offer?(@listing) %>
+     <%= button_to 'Make an offer!', new_listing_bidding_path(@listing), method: :get %> <br/>
+   <% end %>
+    <% if current_user === @listing.user && @biddings.present? %>
+   <% @biddings.each do |bid| %>
+      <table id="biddingstable" class= "table table-bordered" >
+        <thead>
+          <tr>
+            <% if current_user == @listing.user %>
+              <th>Offer by</th>
+              <th>Message</th>
+            <% end %>
+            <% if bid.apprv_deny %>
+              <th>Status</th>
+              <th>Payment</th>
+            <% elsif bid.apprv_deny == nil %>
+              <th>Approve</th>
+              <th>Deny</th>
+            <% else %>
+              <th>Status</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><% if bid.user.profile.try(:any?) %>
+                <%= bid.user.profile.name %>
+                <% else %>
+                <%= bid.user.email %>
+                <% end %>
+            </td>
+            <td><%= bid.body%></td>
+            <% if bid.apprv_deny %>
+              <td>Accepted</td>
+              <td>
+                <%= form_tag charges_path do %>
+                  <div id="box" style="text-align:center;">
+                    <article>
+                      <%= hidden_field_tag 'amount', @listing.budget %>
+                    </article>
+                    <script
+                      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                      data-zip-code="true"
+                      data-key="pk_test_iMWzgJ8asjYKU7Jgjs6d1op2"
+                      data-amount= "<%= @listing.budget %>"
+                      data-name="Beautify"
+                      data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                      data-locale="auto">
+                    </script>
+                    <% end %>
+                  </div>
+                </td>
+            <% elsif bid.apprv_deny == nil %>
+              <td><%= button_to 'Approve', "/listings/#{@listing.id}/biddings/#{bid.id}/approve", id: 'approve-btn', method: :patch,  'data-disable-with' => 'Submiting'   %> </td>
+              <td><%= button_to 'Deny', "/listings/#{@listing.id}/biddings/#{bid.id}/deny", method: :patch,  'data-disable-with' => 'Submiting'   %></td>
+            <% else %>
+              <td> Rejected! </td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+        <% end %>
+    <% else current_user != @listing.user && current_user.has_made_offer?(@listing) %>
+    <% @my_bids.each do |bid| %>
+      <table id="biddingstable">
+        <thead>
+          <tr>
+            <th>Offer</th>
+            <th>Message</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><% if bid.user.profile.try(:any?) %>
+                <%= bid.user.profile.name %>
+                <% else %>
+                <%= bid.user.email %>
+                <% end %>
+            </td>
+            <td><%= bid.body%></td>
+            <td><% if bid.apprv_deny %>
+                  Accepted!
+                <% elsif bid.apprv_deny.nil? %>
+                  Pending
+                <% else %>
+                  Rejected
+                <% end %>
+            </td>
+        </tbody>
+      </table>
+      <% end %>
+    <% end %>
